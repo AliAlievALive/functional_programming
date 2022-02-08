@@ -1,11 +1,9 @@
 package com.halal.streams;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.function.Predicate;
 
-import static com.halal.streams._Stream.Gender.FEMALE;
-import static com.halal.streams._Stream.Gender.MALE;
+import static com.halal.streams._Stream.Gender.*;
 
 public class _Stream {
     public static void main(String[] args) {
@@ -14,13 +12,21 @@ public class _Stream {
                 new Person("Maria", FEMALE),
                 new Person("Aisha", FEMALE),
                 new Person("Alex", MALE),
-                new Person("Alice", FEMALE)
+                new Person("Alice", FEMALE),
+                new Person("Bob", PREFER_NOT_TO_SAY)
         );
 
-        people.stream()
-                .map(person -> person.name)
-                .mapToInt(String::length)
-                .forEach(System.out::println);
+//        people.stream()
+//                .map(person -> person.name)
+//                .mapToInt(String::length)
+//                .forEach(System.out::println);
+
+        Predicate<Person> personPredicate = person -> person.gender.equals(PREFER_NOT_TO_SAY);
+
+        boolean containsOnlyFemales = people.stream()
+                .noneMatch(personPredicate);
+
+        System.out.println(containsOnlyFemales);
     }
 
     static class Person {
@@ -42,6 +48,6 @@ public class _Stream {
     }
 
     enum Gender {
-        MALE, FEMALE
+        MALE, FEMALE, PREFER_NOT_TO_SAY
     }
 }
