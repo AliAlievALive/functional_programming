@@ -2,7 +2,7 @@ package com.halal.finalsection;
 
 import java.util.function.Consumer;
 
-public class Main {
+public class Callbacks {
     public static void main(String[] args) {
 
         hello("John", null, value -> {
